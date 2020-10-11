@@ -67,7 +67,7 @@ namespace HerokufyMore
                 {
                     Version = "v1",
                     Title = "Herokufy .NET",
-                    Description = "A proof of concept that an ASP.NET web application with a relational database can be deployed to Heroku!",
+                    Description = "A proof of concept that an ASP.NET web application with multiple relational databases can be deployed to Heroku!",
                     Contact = new OpenApiContact
                     {
                         Name = "Kyungrae Kim",
@@ -110,7 +110,7 @@ namespace HerokufyMore
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllerRoute("default", "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
