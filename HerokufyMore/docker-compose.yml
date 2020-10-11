@@ -1,0 +1,8 @@
+version: '3.4'
+
+services:
+  herokufymore:
+    image: ${DOCKER_REGISTRY-}herokufymore
+    build:
+      context: .
+      dockerfile: HerokufyMore/Dockerfile
