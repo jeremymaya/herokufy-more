@@ -8,10 +8,10 @@ ARG PRODUCT_RED
 
 FROM mcr.microsoft.com/dotnet/core/sdk:3.1-buster AS build
 WORKDIR /src
-COPY ["HerokufyMore/HerokufyMore.csproj", "HerokufyMore/"]
-RUN dotnet restore "HerokufyMore/HerokufyMore.csproj"
+COPY ["HerokufyMore.csproj", "./"]
+RUN dotnet restore "./HerokufyMore.csproj"
 COPY . .
-WORKDIR "/src/HerokufyMore"
+WORKDIR "/src/."
 RUN dotnet build "HerokufyMore.csproj" -c Release -o /app/build
 
 FROM build AS publish
@@ -20,4 +20,4 @@ RUN dotnet publish "HerokufyMore.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "HerokufyMore.dll"]
+CMD ASPNETCORE_URLS=http://*:$PORT dotnet HerokufyMore.dll
