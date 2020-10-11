@@ -38,9 +38,7 @@ namespace HerokufyMore
         {
             // Get the connection string from the ENV variables
             // Modified to bring in connection string from Secrets in Development
-            string connectionUrl = WebHostEnvironment.IsDevelopment()
-                ? Configuration["ConnectionString:" + connectionString]
-                : Environment.GetEnvironmentVariable(connectionString);
+            string connectionUrl = Environment.GetEnvironmentVariable(connectionString);
 
             // parse the connection string
             var databaseUri = new Uri(connectionUrl);
