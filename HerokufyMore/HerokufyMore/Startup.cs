@@ -38,7 +38,9 @@ namespace HerokufyMore
         {
             // Get the connection string from the ENV variables
             // Modified to bring in connection string from Secrets in Development
-            string connectionUrl = Environment.GetEnvironmentVariable(connectionString);
+            string connectionUrl = WebHostEnvironment.IsDevelopment()
+                ? Configuration["ConnectionString:" + connectionString]
+                : Environment.GetEnvironmentVariable(connectionString);
 
             // parse the connection string
             var databaseUri = new Uri(connectionUrl);
@@ -54,7 +56,7 @@ namespace HerokufyMore
         {
             services.AddControllers();
 
-            services.AddDbContext<StoreDbContext>(options => options.UseNpgsql(GetHerokuConnectionString("PRODUCT_RED")));
+            services.AddDbContext<StoreDbContext>(options => options.UseNpgsql(GetHerokuConnectionString("HEROKU_POSTGRESQL_RED_URL")));
 
             services.AddTransient<IInventoryManager, InventoryManager>();
 
