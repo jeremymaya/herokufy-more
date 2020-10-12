@@ -107,7 +107,7 @@ namespace HerokufyMore
 
             var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-            RoleInitializer.SeedData(serviceProvider, userManager, Configuration);
+            RoleInitializer.SeedData(serviceProvider, userManager, Configuration, env);
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
