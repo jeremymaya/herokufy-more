@@ -19,10 +19,10 @@ jobs:
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       # Change the directory to where Dockerfile is located using cd command before running Heroku CLI commands
-      # Add --arg DATABASE_URL=${{ secrets.DATABASE_URL }} to pass the DATABASE_URL stored in GitHub Secrets
+      # Multiple --arg can be added as below, separated by commas
       run: |
         cd ./HerokufyMore/HerokufyMore
-        heroku container:push web -a ${{ secrets.HEROKU_APP_NAME }} --arg HEROKU_POSTGRESQL_OLIVE_URL=${{ secrets.HEROKU_POSTGRESQL_OLIVE_URL }},HEROKU_POSTGRESQL_RED_URL=${{ secrets.HEROKU_POSTGRESQL_RED_URL }}
+        heroku container:push web -a ${{ secrets.HEROKU_APP_NAME }} --arg ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }},ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }},HEROKU_POSTGRESQL_OLIVE_URL=${{ secrets.HEROKU_POSTGRESQL_OLIVE_URL }},HEROKU_POSTGRESQL_RED_URL=${{ secrets.HEROKU_POSTGRESQL_RED_URL }}
     - name: Release
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}

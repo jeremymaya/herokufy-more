@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
-namespace HerokufyMore.Migrations.ApplicationDb
+namespace HerokufyMore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201011235051_initial")]
-    partial class initial
+    [Migration("20201012005005_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

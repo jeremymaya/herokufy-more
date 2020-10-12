@@ -1,12 +1,14 @@
-﻿using HerokufyMore.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using HerokufyMore.Data;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Hosting;
 
 namespace HerokufyMore.Models
 {
@@ -29,11 +31,39 @@ namespace HerokufyMore.Models
             }
         };
 
-        public static void SeedData(IServiceProvider serviceProvider)
+        public static void SeedData(IServiceProvider serviceProvider, UserManager<ApplicationUser> users, IConfiguration _configuration, IWebHostEnvironment _webHostEnvironment)
         {
             using var dbContext = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>());
             dbContext.Database.EnsureCreated();
             AddRoles(dbContext);
+            SeedUsersAsync(users, _configuration, _webHostEnvironment);
+        }
+
+        private static void SeedUsersAsync(UserManager<ApplicationUser> userManager, IConfiguration _configuration, IWebHostEnvironment _webHostEnvironment)
+        {
+            string adminEmail = _webHostEnvironment.IsDevelopment()
+                ? _configuration["ADMIN_EMAIL"]
+                : Environment.GetEnvironmentVariable("ADMIN_EMAIL_ENV");
+
+            if (userManager.FindByEmailAsync(adminEmail).Result == null)
+            {
+                ApplicationUser user = new ApplicationUser
+                {
+                    UserName = adminEmail,
+                    Email = adminEmail,
+                    FirstName = "Admin",
+                    LastName = "Admin"
+                };
+
+                string adminPassword = _webHostEnvironment.IsDevelopment()
+                    ? _configuration["ADMIN_PASSWORD_ENV"]
+                    : Environment.GetEnvironmentVariable("ADMIN_PASSWORD_ENV");
+
+                IdentityResult result = userManager.CreateAsync(user, adminPassword).Result;
+
+                if (result.Succeeded)
+                    userManager.AddToRoleAsync(user, ApplicationRoles.Admin).Wait();
+            }
         }
 
         private static void AddRoles(ApplicationDbContext dbContext)
