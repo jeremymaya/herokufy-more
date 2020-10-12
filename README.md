@@ -10,9 +10,9 @@ Endpoint: <http://herokufy-more.herokuapp.com>
 
 ## Description
 
-This is a further proof of concept that an ASP.NET web application with __multiple__ relational databases can be continuously integrated and deployed to Heroku by combining the power of Docker and GitHub Actions.
+This is a further proof of concept that an ASP.NET web application with __multiple__ relational databases can be continuously integrated and deployed to Heroku by combining the power of [Docker](https://www.docker.com) and [GitHub Actions](https://github.com/features/actions).
 
-This repository showcases a more complicated ASP.NET web application deployment scenario compared to [Herokufy Dotnet]((https://github.com/jeremymaya/herokufy-dotnet)) by adding a second database seeded with a Admin account using ASP.NET Identity.
+This repository showcases a more complicated ASP.NET web application deployment scenario compared to [Herokufy Dotnet](https://github.com/jeremymaya/herokufy-dotnet) by adding a second database seeded with a Admin account using ASP.NET Identity.
 
 The below is the Admin account login information for demo purpose:
 
