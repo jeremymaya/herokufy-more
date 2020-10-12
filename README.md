@@ -25,7 +25,7 @@ Password: ReallyStrongPassword1234!
 
 ## What Differs
 
-Pay close attention to `[Dockerfile](HerokufyMore/HerokufyMore/Dockerfile)` and `[deployment.yml](.github/workflows/deployment.yml)`!
+Pay close attention to `Dockerfile` and `deployment.yml`!
 
 ### Dockerfile
 
