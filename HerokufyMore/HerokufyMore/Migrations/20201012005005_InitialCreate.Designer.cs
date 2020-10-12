@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace HerokufyMore.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201012003906_InitialCreate")]
+    [Migration("20201012005005_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
