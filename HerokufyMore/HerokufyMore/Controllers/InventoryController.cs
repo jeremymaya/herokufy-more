@@ -24,16 +24,10 @@ namespace HerokufyMore.Controllers
         /// Gets a list of amenities
         /// </summary>
         /// <returns>A list of data transfer object containing amenity information</returns>
-        //[HttpGet]
-        //public async Task<ActionResult<IEnumerable<Product>>> GetAmenities()
-        //{
-        //    return await _inventory.GetProducts();
-        //}
-
         [HttpGet]
-        public string GetAmenities()
+        public async Task<ActionResult<IEnumerable<Product>>> GetAmenities()
         {
-            return Environment.GetEnvironmentVariable("ADMIN_EMAIL");
+            return await _inventory.GetProducts();
         }
     }
 }
