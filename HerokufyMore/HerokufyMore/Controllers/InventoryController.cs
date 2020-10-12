@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HerokufyMore.Controllers
 {
+    [Produces("application/json")]
     [Route("api/[controller]")]
     [ApiController]
     public class InventoryController : ControllerBase
@@ -24,7 +25,8 @@ namespace HerokufyMore.Controllers
         /// Gets a list of amenities
         /// </summary>
         /// <returns>A list of data transfer object containing amenity information</returns>
-        [HttpGet]
+        [HttpGet, Route("GetAmenities")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<ActionResult<IEnumerable<Product>>> GetAmenities()
         {
             return await _inventory.GetProducts();

@@ -55,7 +55,9 @@ namespace HerokufyMore.Models
                     LastName = "Admin"
                 };
 
-                string adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD_ENV");
+                string adminPassword = _webHostEnvironment.IsDevelopment()
+                    ? _configuration["ADMIN_PASSWORD_ENV"]
+                    : Environment.GetEnvironmentVariable("ADMIN_PASSWORD_ENV");
 
                 IdentityResult result = userManager.CreateAsync(user, adminPassword).Result;
 
