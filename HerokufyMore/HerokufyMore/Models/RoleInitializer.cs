@@ -41,9 +41,7 @@ namespace HerokufyMore.Models
 
         private static void SeedUsersAsync(UserManager<ApplicationUser> userManager, IConfiguration _configuration, IWebHostEnvironment _webHostEnvironment)
         {
-            string adminEmail = _webHostEnvironment.IsDevelopment()
-                ? _configuration["ADMIN_EMAIL"]
-                : Environment.GetEnvironmentVariable("ADMIN_EMAIL");
+            string adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL");
 
             if (userManager.FindByEmailAsync(adminEmail).Result == null)
             {
@@ -55,11 +53,9 @@ namespace HerokufyMore.Models
                     LastName = "Admin"
                 };
 
-                string districtManagerPassword = _webHostEnvironment.IsDevelopment()
-                    ? _configuration["ADMIN_PASSWORD"]
-                    : Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
+                string adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
 
-                IdentityResult result = userManager.CreateAsync(user, _configuration["ADMIN_PASSWORD"]).Result;
+                IdentityResult result = userManager.CreateAsync(user, adminPassword).Result;
 
                 if (result.Succeeded)
                     userManager.AddToRoleAsync(user, ApplicationRoles.Admin).Wait();
