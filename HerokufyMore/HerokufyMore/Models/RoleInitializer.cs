@@ -1,12 +1,12 @@
-﻿using HerokufyMore.Data;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using HerokufyMore.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace HerokufyMore.Models
 {
@@ -39,7 +39,7 @@ namespace HerokufyMore.Models
 
         private static void SeedUsersAsync(UserManager<ApplicationUser> userManager, IConfiguration _configuration)
         {
-            string adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL");
+            string adminEmail = "";
 
             if (userManager.FindByEmailAsync(adminEmail).Result == null)
             {
@@ -51,7 +51,7 @@ namespace HerokufyMore.Models
                     LastName = "Admin"
                 };
 
-                string adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
+                string adminPassword = "";
 
                 IdentityResult result = userManager.CreateAsync(user, adminPassword).Result;
 
