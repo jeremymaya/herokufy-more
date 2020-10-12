@@ -39,9 +39,7 @@ namespace HerokufyMore.Models
 
         private static void SeedUsersAsync(UserManager<ApplicationUser> userManager, IConfiguration _configuration)
         {
-            string adminEmail = "admin@email.com";
-
-            Console.WriteLine(Environment.GetEnvironmentVariable("ADMIN_EMAIL"));
+            string adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL");
 
             if (userManager.FindByEmailAsync(adminEmail).Result == null)
             {
