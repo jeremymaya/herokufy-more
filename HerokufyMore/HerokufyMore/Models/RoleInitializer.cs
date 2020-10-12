@@ -29,31 +29,29 @@ namespace HerokufyMore.Models
             }
         };
 
-        public static void SeedData(IServiceProvider serviceProvider, UserManager<ApplicationUser> users, IConfiguration _configuration, string email)
+        public static void SeedData(IServiceProvider serviceProvider, UserManager<ApplicationUser> users, IConfiguration _configuration)
         {
             using var dbContext = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>());
             dbContext.Database.EnsureCreated();
             AddRoles(dbContext);
-            SeedUsersAsync(users, _configuration, email);
+            SeedUsersAsync(users, _configuration);
         }
 
-        private static void SeedUsersAsync(UserManager<ApplicationUser> userManager, IConfiguration _configuration, string email)
+        private static void SeedUsersAsync(UserManager<ApplicationUser> userManager, IConfiguration _configuration)
         {
-            //string adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL");
+            string adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL_ENV");
 
-            if (userManager.FindByEmailAsync(email).Result == null)
+            if (userManager.FindByEmailAsync(adminEmail).Result == null)
             {
                 ApplicationUser user = new ApplicationUser
                 {
-                    UserName = email,
-                    Email = email,
+                    UserName = adminEmail,
+                    Email = adminEmail,
                     FirstName = "Admin",
                     LastName = "Admin"
                 };
 
                 string adminPassword = "ReallyStrongPassword1234!";
-
-                Console.WriteLine(Environment.GetEnvironmentVariable("ADMIN_PASSWORD"));
 
                 IdentityResult result = userManager.CreateAsync(user, adminPassword).Result;
 
