@@ -41,7 +41,7 @@ namespace HerokufyMore.Models
 
         private static void SeedUsersAsync(UserManager<ApplicationUser> userManager, IConfiguration _configuration, IWebHostEnvironment _webHostEnvironment)
         {
-            string adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL");
+            string adminEmail = "admin@email.com";
 
             if (userManager.FindByEmailAsync(adminEmail).Result == null)
             {
@@ -53,7 +53,7 @@ namespace HerokufyMore.Models
                     LastName = "Admin"
                 };
 
-                string adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
+                string adminPassword = "ReallyStrongPassword1234!";
 
                 IdentityResult result = userManager.CreateAsync(user, adminPassword).Result;
 
