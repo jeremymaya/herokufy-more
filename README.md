@@ -10,26 +10,35 @@ Endpoint: <http://herokufy-more.herokuapp.com>
 
 ## Description
 
-This is a further [proof of concept](https://github.com/jeremymaya/herokufy-dotnet) that and ASP.NET web application with __multiple__ relational databases can be continuously integrated and deployed to Heroku by combining the power of Docker and GitHub Actions.
+This is a further proof of concept that an ASP.NET web application with __multiple__ relational databases can be continuously integrated and deployed to Heroku by combining the power of Docker and GitHub Actions.
 
-This repository showcases a more complicated ASP.NET web application compared to Herokufy by adding a second database seeded with a Admin account using ASP.NET Identity.
+This repository showcases a more complicated ASP.NET web application deployment scenario compared to [Herokufy Dotnet]((https://github.com/jeremymaya/herokufy-dotnet)) by adding a second database seeded with a Admin account using ASP.NET Identity.
 
-* Admin Account Login Information
+The below is the Admin account login information for demo purpose:
 
-    ```text
-    Email: admin@email.com
-    Password: ReallyStrongPassword1234!
-    ```
+```text
+Email: admin@email.com
+Password: ReallyStrongPassword1234!
+```
 
 ---
 
 ## What Differs
 
-Pay close attention to `Dockerfile` and `deployment.yml`!
+Pay close attention to `[Dockerfile](HerokufyMore/HerokufyMore/Dockerfile)` and `[deployment.yml](.github/workflows/deployment.yml)`!
 
 ### Dockerfile
 
 The variable defined as `ARG` in Dockerfile is only available during the build-time. In order to access other variables throughout the application, those variables need to be defined as `ENV`. However, Heroku does NOT support the `--env` option. Therefore, we need to define an `ENV` variable that references an `ARG`.
+
+For example:
+
+```dockerfile
+ARG ADMIN_EMAIL
+ARG ADMIN_PASSWORD
+ENV ADMIN_EMAIL_ENV=$ADMIN_EMAIL
+ENV ADMIN_PASSWORD_ENV=$ADMIN_PASSWORD
+```
 
 ### Workflow
 
