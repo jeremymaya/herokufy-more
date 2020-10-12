@@ -5,11 +5,13 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using HerokufyMore.Data;
+using HerokufyMore.Models;
 using HerokufyMore.Models.Interfaces;
 using HerokufyMore.Models.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -56,6 +58,12 @@ namespace HerokufyMore
         {
             services.AddControllers();
 
+            services.AddDbContext<ApplicationDbContext>(options => options.UseNpgsql(GetHerokuConnectionString("HEROKU_POSTGRESQL_OLIVE_URL")));
+
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
+
             services.AddDbContext<StoreDbContext>(options => options.UseNpgsql(GetHerokuConnectionString("HEROKU_POSTGRESQL_RED_URL")));
 
             services.AddTransient<IInventoryManager, InventoryManager>();
@@ -84,7 +92,7 @@ namespace HerokufyMore
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
             if (env.IsDevelopment())
             {
@@ -96,6 +104,8 @@ namespace HerokufyMore
             app.UseRouting();
 
             app.UseAuthorization();
+
+            RoleInitializer.SeedData(serviceProvider);
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
