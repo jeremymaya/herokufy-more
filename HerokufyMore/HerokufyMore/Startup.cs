@@ -38,13 +38,10 @@ namespace HerokufyMore
         // Source: https://n1ghtmare.github.io/2020-09-28/deploying-a-dockerized-aspnet-core-app-using-a-postgresql-db-to-heroku/
         private string GetHerokuConnectionString(string connectionString)
         {
-            // Get the connection string from the ENV variables
-            // Modified to bring in connection string from Secrets in Development
             string connectionUrl = WebHostEnvironment.IsDevelopment()
                 ? Configuration["ConnectionString:" + connectionString]
                 : Environment.GetEnvironmentVariable(connectionString);
 
-            // parse the connection string
             var databaseUri = new Uri(connectionUrl);
 
             string db = databaseUri.LocalPath.TrimStart('/');
@@ -74,7 +71,7 @@ namespace HerokufyMore
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Version = "v1",
-                    Title = "Herokufy .NET",
+                    Title = "Herokufy .NET More",
                     Description = "A proof of concept that an ASP.NET web application with multiple relational databases can be deployed to Heroku!",
                     Contact = new OpenApiContact
                     {
