@@ -1,10 +1,8 @@
 ﻿using HerokufyMore.Data;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,17 +29,17 @@ namespace HerokufyMore.Models
             }
         };
 
-        public static void SeedData(IServiceProvider serviceProvider, UserManager<ApplicationUser> users, IConfiguration _configuration, IWebHostEnvironment _webHostEnvironment)
+        public static void SeedData(IServiceProvider serviceProvider, UserManager<ApplicationUser> users, IConfiguration _configuration)
         {
             using var dbContext = new ApplicationDbContext(serviceProvider.GetRequiredService<DbContextOptions<ApplicationDbContext>>());
             dbContext.Database.EnsureCreated();
             AddRoles(dbContext);
-            SeedUsersAsync(users, _configuration, _webHostEnvironment);
+            SeedUsersAsync(users, _configuration);
         }
 
-        private static void SeedUsersAsync(UserManager<ApplicationUser> userManager, IConfiguration _configuration, IWebHostEnvironment _webHostEnvironment)
+        private static void SeedUsersAsync(UserManager<ApplicationUser> userManager, IConfiguration _configuration)
         {
-            string adminEmail = "admin@email.com";
+            string adminEmail = Environment.GetEnvironmentVariable("ADMIN_EMAIL");
 
             if (userManager.FindByEmailAsync(adminEmail).Result == null)
             {
@@ -53,7 +51,7 @@ namespace HerokufyMore.Models
                     LastName = "Admin"
                 };
 
-                string adminPassword = "ReallyStrongPassword1234!";
+                string adminPassword = Environment.GetEnvironmentVariable("ADMIN_PASSWORD");
 
                 IdentityResult result = userManager.CreateAsync(user, adminPassword).Result;
 
