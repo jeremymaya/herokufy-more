@@ -1,5 +1,6 @@
 # herokufy-more
 
+![Actions Status](https://github.com/jeremymaya/herokufy-more/workflows/build/badge.svg)  
 ![Actions Status](https://github.com/jeremymaya/herokufy-more/workflows/deploy/badge.svg)
 
 Author: Kyungrae Kim
