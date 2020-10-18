@@ -16,4 +16,4 @@ jobs:
     - name: Install dependencies
       run: dotnet restore ./HerokufyMore/HerokufyMore.sln
     - name: Build
-      run: dotnet build ./Herokufy/HerokufyMore.sln --configuration Release
+      run: dotnet build ./HerokufyMore/HerokufyMore.sln --configuration Release
